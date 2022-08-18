@@ -1,5 +1,6 @@
 let login=document.querySelector("#login")
 
+
 login.addEventListener("click",()=>{
     mostrarLogin()
 })
@@ -21,10 +22,17 @@ const  mostrarLogin=()=>{
           return { login: login, password: password }
         }
       }).then((result) => {
-        Swal.fire(`
-          Login: ${result.value.login}
-          Password: ${result.value.password}
-        `.trim())
+        let usuario=localStorage.getItem(result.value.login)
+        usuario=JSON.parse(usuario)
+        const correo=document.querySelector("#correo")
+
+        if (usuario.correo===result.value.login && usuario.contrasena === Number(result.value.password)) {
+          correo.classList.add("enlace-nav")
+          correo.innerHTML=usuario.correo
+        }else{
+
+          alert("Ingrese datos correctos")
+        }
       })
       
 }
